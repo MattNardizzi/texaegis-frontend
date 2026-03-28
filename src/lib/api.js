@@ -1,4 +1,5 @@
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "https://texaegis-backend.onrender.com";
 
 export async function evaluateEmail(payload) {
   const controller = new AbortController();
@@ -23,7 +24,6 @@ export async function evaluateEmail(payload) {
           message = errorData.detail;
         }
       } catch {
-        // keep fallback
       }
 
       throw new Error(message);
@@ -32,7 +32,7 @@ export async function evaluateEmail(payload) {
     return await response.json();
   } catch (error) {
     if (error.name === "AbortError") {
-      throw new Error("Request timed out. Check whether the backend is running.");
+      throw new Error("Request timed out. Check whether the backend is reachable.");
     }
     throw error;
   } finally {
