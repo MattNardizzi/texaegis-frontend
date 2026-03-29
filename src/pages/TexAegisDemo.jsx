@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import EmailPanel from "../components/EmailPanel";
-import ResultPanel from "../components/ResultPanel";
+import ResultPanel, { DeterministicPanel, SemanticPanel } from "../components/ResultPanel";
 import { evaluateEmail } from "../lib/api";
 import texCharacter from "../assets/tex_aegis.jpeg";
 
@@ -54,11 +54,11 @@ export default function TexAegisDemo() {
       <div style={styles.backgroundGrid} />
       <div style={styles.backgroundGlowTop} />
 
-      <div style={styles.shell}>
+      <div className="tex-shell">
         <header style={styles.hero}>
           <div style={styles.heroBadge}>TEX AEGIS · ACTION INTELLIGENCE</div>
 
-          <div style={styles.heroContent}>
+          <div className="tex-hero-content">
             <div style={styles.heroCopy}>
               <h1 style={styles.title}>
                 Before AI acts, <span style={styles.gradientText}>Tex decides.</span>
@@ -70,7 +70,7 @@ export default function TexAegisDemo() {
                 logic before an external action is allowed to proceed.
               </p>
 
-              <div style={styles.heroMetaRow}>
+              <div className="tex-hero-meta-row">
                 <div style={styles.metaCard}>
                   <div style={styles.metaLabel}>Mode</div>
                   <div style={styles.metaValue}>Outbound Message Review</div>
@@ -89,12 +89,12 @@ export default function TexAegisDemo() {
             </div>
 
             <div style={styles.heroVisual}>
-              <img src={texCharacter} alt="Tex Aegis" style={styles.characterImage} />
+              <img src={texCharacter} alt="Tex Aegis" className="tex-character-image" />
             </div>
           </div>
         </header>
 
-        <main style={styles.mainGrid}>
+        <div className="tex-main-grid">
           <section style={styles.leftColumn}>
             <EmailPanel
               text={text}
@@ -107,7 +107,7 @@ export default function TexAegisDemo() {
             <div style={styles.contextCard}>
               <div style={styles.contextLabel}>EVALUATION CONTEXT</div>
 
-              <div style={styles.contextGrid}>
+              <div className="tex-context-grid">
                 <div style={styles.contextItem}>
                   <span style={styles.contextItemLabel}>Sender</span>
                   <span style={styles.contextItemValue}>{DEMO_SENDER}</span>
@@ -138,7 +138,14 @@ export default function TexAegisDemo() {
           <section style={styles.rightColumn}>
             <ResultPanel result={result} />
           </section>
-        </main>
+        </div>
+
+        {result && (
+          <div className="tex-layers-grid">
+            <DeterministicPanel result={result} />
+            <SemanticPanel result={result} />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -156,15 +163,6 @@ const styles = {
     color: "#e7edf7",
     fontFamily:
       'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-  },
-
-  shell: {
-    position: "relative",
-    zIndex: 2,
-    width: "100%",
-    maxWidth: 1380,
-    margin: "0 auto",
-    padding: "56px 28px 72px",
   },
 
   backgroundGrid: {
@@ -210,20 +208,13 @@ const styles = {
     marginBottom: 18,
   },
 
-  heroContent: {
-    display: "grid",
-    gridTemplateColumns: "minmax(0, 1.2fr) minmax(280px, 460px)",
-    gap: 28,
-    alignItems: "center",
-  },
-
   heroCopy: {
     minWidth: 0,
   },
 
   title: {
     margin: 0,
-    fontSize: "clamp(34px, 4.8vw, 58px)",
+    fontSize: "clamp(28px, 4.8vw, 58px)",
     lineHeight: 0.96,
     letterSpacing: -1.4,
     fontWeight: 800,
@@ -240,16 +231,9 @@ const styles = {
   subtitle: {
     margin: "18px 0 0 0",
     maxWidth: 760,
-    fontSize: 16,
+    fontSize: "clamp(14px, 2vw, 16px)",
     lineHeight: 1.75,
     color: "#99a3b7",
-  },
-
-  heroMetaRow: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: 14,
-    marginTop: 24,
   },
 
   metaCard: {
@@ -282,25 +266,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    minHeight: 400,
     overflow: "visible",
-  },
-
-  characterImage: {
-    width: 420,
-    height: 420,
-    objectFit: "cover",
-    objectPosition: "center top",
-    border: "none",
-    borderRadius: 0,
-    display: "block",
-  },
-
-  mainGrid: {
-    display: "grid",
-    gridTemplateColumns: "minmax(0, 0.94fr) minmax(0, 1.06fr)",
-    gap: 24,
-    alignItems: "start",
   },
 
   leftColumn: {
@@ -330,12 +296,6 @@ const styles = {
     color: "#687289",
     fontWeight: 800,
     marginBottom: 14,
-  },
-
-  contextGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: 12,
   },
 
   contextItem: {

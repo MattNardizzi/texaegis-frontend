@@ -77,62 +77,78 @@ export default function ResultPanel({ result }) {
           </div>
         )}
       </section>
-
-      <div style={styles.layersGrid}>
-        <section style={styles.section}>
-          <div style={styles.sectionHeader}>
-            <div style={styles.sectionLabel}>DETERMINISTIC FINDINGS</div>
-            <div style={styles.sectionMeta}>{findings.length} rule hit(s)</div>
-          </div>
-
-          {findings.length === 0 ? (
-            <div style={styles.mutedText}>No hard-rule findings were triggered.</div>
-          ) : (
-            <div style={styles.findingList}>
-              {findings.map((finding, index) => (
-                <FindingTag
-                  key={`${finding?.type || "finding"}-${index}`}
-                  type={safeText(finding?.type, "Finding")}
-                  severity={normalizeSeverity(finding?.severity)}
-                  message={safeText(
-                    finding?.message,
-                    "A deterministic finding was returned without a message."
-                  )}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section style={styles.section}>
-          <div style={styles.sectionHeader}>
-            <div style={styles.sectionLabel}>SEMANTIC LAYER</div>
-            <div style={styles.sectionMeta}>
-              {semanticRows.length > 0 ? `${semanticRows.length} dimension(s)` : "Unavailable"}
-            </div>
-          </div>
-
-          {semanticRows.length > 0 ? (
-            <div style={styles.semanticList}>
-              {semanticRows.map((row) => (
-                <ScoreRow
-                  key={row.key}
-                  label={row.label}
-                  score={row.score}
-                  finding={row.finding}
-                  evidence={row.evidence}
-                />
-              ))}
-            </div>
-          ) : (
-            <div style={styles.semanticUnavailable}>
-              Semantic evaluation was not returned. Tex is relying on
-              deterministic checks and final decision fallback behavior.
-            </div>
-          )}
-        </section>
-      </div>
     </div>
+  );
+}
+
+export function DeterministicPanel({ result }) {
+  if (!result) return null;
+
+  const findings = Array.isArray(result?.deterministic_findings)
+    ? result.deterministic_findings.filter(Boolean)
+    : [];
+
+  return (
+    <section style={styles.section}>
+      <div style={styles.sectionHeader}>
+        <div style={styles.sectionLabel}>DETERMINISTIC FINDINGS</div>
+        <div style={styles.sectionMeta}>{findings.length} rule hit(s)</div>
+      </div>
+
+      {findings.length === 0 ? (
+        <div style={styles.mutedText}>No hard-rule findings were triggered.</div>
+      ) : (
+        <div style={styles.findingList}>
+          {findings.map((finding, index) => (
+            <FindingTag
+              key={`${finding?.type || "finding"}-${index}`}
+              type={safeText(finding?.type, "Finding")}
+              severity={normalizeSeverity(finding?.severity)}
+              message={safeText(
+                finding?.message,
+                "A deterministic finding was returned without a message."
+              )}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+export function SemanticPanel({ result }) {
+  if (!result) return null;
+
+  const semanticRows = getSemanticRows(result?.semantic_evaluation);
+
+  return (
+    <section style={styles.section}>
+      <div style={styles.sectionHeader}>
+        <div style={styles.sectionLabel}>SEMANTIC LAYER</div>
+        <div style={styles.sectionMeta}>
+          {semanticRows.length > 0 ? `${semanticRows.length} dimension(s)` : "Unavailable"}
+        </div>
+      </div>
+
+      {semanticRows.length > 0 ? (
+        <div style={styles.semanticList}>
+          {semanticRows.map((row) => (
+            <ScoreRow
+              key={row.key}
+              label={row.label}
+              score={row.score}
+              finding={row.finding}
+              evidence={row.evidence}
+            />
+          ))}
+        </div>
+      ) : (
+        <div style={styles.semanticUnavailable}>
+          Semantic evaluation was not returned. Tex is relying on
+          deterministic checks and final decision fallback behavior.
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -203,13 +219,6 @@ const styles = {
     flexDirection: "column",
     gap: 18,
     minWidth: 0,
-  },
-
-  layersGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 18,
-    alignItems: "start",
   },
 
   emptyState: {
