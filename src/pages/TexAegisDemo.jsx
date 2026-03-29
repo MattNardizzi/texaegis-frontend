@@ -94,7 +94,7 @@ export default function TexAegisDemo() {
           </div>
         </header>
 
-        <div style={styles.contextCard}>
+        <div style={styles.contextCard} className="tex-hide-mobile">
           <div style={styles.contextLabel}>EVALUATION CONTEXT</div>
 
           <div className="tex-context-grid">

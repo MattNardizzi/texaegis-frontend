@@ -1,4 +1,4 @@
-/* ── Tex Aegis Responsive Layout ── */
+/* â”€â”€ Tex Aegis Responsive Layout â”€â”€ */
 
 .tex-hero-content {
   display: grid;
@@ -55,7 +55,7 @@
   padding: 56px 28px 72px;
 }
 
-/* ── Tablet (≤1024px) ── */
+/* â”€â”€ Tablet (â‰¤1024px) â”€â”€ */
 @media (max-width: 1024px) {
   .tex-shell {
     padding: 36px 20px 48px;
@@ -86,12 +86,16 @@
     width: 280px;
     height: 280px;
   }
+
+  .tex-context-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-/* ── Mobile (≤640px) ── */
+/* â”€â”€ Mobile (â‰¤640px) â”€â”€ */
 @media (max-width: 640px) {
   .tex-shell {
-    padding: 24px 14px 40px;
+    padding: 20px 12px 32px;
   }
 
   .tex-hero-content {
@@ -101,7 +105,7 @@
 
   .tex-hero-meta-row {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
   }
 
   .tex-main-grid {
@@ -110,8 +114,8 @@
   }
 
   .tex-context-grid {
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
   .tex-layers-grid {
@@ -121,7 +125,22 @@
   }
 
   .tex-character-image {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
+  }
+
+  .tex-hide-mobile {
+    display: none;
+  }
+
+  .tex-hero-meta-row {
+    display: none;
+  }
+}
+
+/* â”€â”€ Mobile textarea fix â”€â”€ */
+@media (max-width: 640px) {
+  #tex-email-input {
+    min-height: 160px !important;
   }
 }
