@@ -133,19 +133,15 @@ export default function TexAegisDemo() {
                 </div>
               </div>
             </div>
+
+            {result && <DeterministicPanel result={result} />}
           </section>
 
           <section style={styles.rightColumn}>
             <ResultPanel result={result} />
+            {result && <SemanticPanel result={result} />}
           </section>
         </div>
-
-        {result && (
-          <div className="tex-layers-grid">
-            <DeterministicPanel result={result} />
-            <SemanticPanel result={result} />
-          </div>
-        )}
       </div>
     </div>
   );
@@ -277,6 +273,9 @@ const styles = {
   },
 
   rightColumn: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 18,
     minWidth: 0,
   },
 
