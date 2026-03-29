@@ -94,6 +94,36 @@ export default function TexAegisDemo() {
           </div>
         </header>
 
+        <div style={styles.contextCard}>
+          <div style={styles.contextLabel}>EVALUATION CONTEXT</div>
+
+          <div className="tex-context-grid">
+            <div style={styles.contextItem}>
+              <span style={styles.contextItemLabel}>Sender</span>
+              <span style={styles.contextItemValue}>{DEMO_SENDER}</span>
+            </div>
+
+            <div style={styles.contextItem}>
+              <span style={styles.contextItemLabel}>Recipient</span>
+              <span style={styles.contextItemValue}>{DEMO_RECIPIENT}</span>
+            </div>
+
+            <div style={styles.contextItem}>
+              <span style={styles.contextItemLabel}>Subject</span>
+              <span style={styles.contextItemValue}>
+                Outbound Communication Review
+              </span>
+            </div>
+
+            <div style={styles.contextItem}>
+              <span style={styles.contextItemLabel}>Pipeline</span>
+              <span style={styles.contextItemValue}>
+                Rules → Semantics → Final Decision
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div className="tex-main-grid">
           <section style={styles.leftColumn}>
             <EmailPanel
@@ -103,36 +133,6 @@ export default function TexAegisDemo() {
               error={error}
               onEvaluate={handleEvaluate}
             />
-
-            <div style={styles.contextCard}>
-              <div style={styles.contextLabel}>EVALUATION CONTEXT</div>
-
-              <div className="tex-context-grid">
-                <div style={styles.contextItem}>
-                  <span style={styles.contextItemLabel}>Sender</span>
-                  <span style={styles.contextItemValue}>{DEMO_SENDER}</span>
-                </div>
-
-                <div style={styles.contextItem}>
-                  <span style={styles.contextItemLabel}>Recipient</span>
-                  <span style={styles.contextItemValue}>{DEMO_RECIPIENT}</span>
-                </div>
-
-                <div style={styles.contextItem}>
-                  <span style={styles.contextItemLabel}>Subject</span>
-                  <span style={styles.contextItemValue}>
-                    Outbound Communication Review
-                  </span>
-                </div>
-
-                <div style={styles.contextItem}>
-                  <span style={styles.contextItemLabel}>Pipeline</span>
-                  <span style={styles.contextItemValue}>
-                    Rules → Semantics → Final Decision
-                  </span>
-                </div>
-              </div>
-            </div>
 
             {result && <DeterministicPanel result={result} />}
           </section>
@@ -284,6 +284,7 @@ const styles = {
     background: panelBackground,
     borderRadius: 18,
     padding: 18,
+    marginBottom: 24,
     boxShadow:
       "0 0 0 1px rgba(255,255,255,0.02) inset, 0 20px 60px rgba(0,0,0,0.25)",
   },
